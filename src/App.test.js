@@ -13,4 +13,9 @@ test("receives GitHub name from Github REST API using jest fetch mock", async ()
     expect(gitHubName).toHaveTextContent('coder')
 })
 
-
+test("receives GitHub url from Github REST API using jest fetch mock", async () => {
+    fetch.mockResponseOnce(JSON.stringify({ html_url: 'https://github.com/learningToCode1234' }))
+    render(<App />)
+    const gitHubURL = await waitFor(() => screen.getByRole('link'))
+    expect(gitHubURL).toHaveAttribute('href', expect.stringContaining('github.com'))
+})
